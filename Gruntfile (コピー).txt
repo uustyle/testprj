@@ -1,0 +1,47 @@
+'use strict';
+
+module.exports = function(grunt) {
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+
+    copy: {
+      dev: {
+        files: [{
+            expand: true,
+            cwd: 'src', 
+            src: [
+              'html/*',
+              'js/*',
+              'index.html'
+            ], 
+            dest: 'dist',
+            filter: 'isFile'
+            dot: false
+        }, {
+            expand: true,
+            cwd: 'bower_components', 
+            src: [
+              'angular-ui-router/release/angular-ui-router.js',
+              'angular/angular.js'
+            ], 
+            dest: 'src/fonts/',
+            filter: 'isFile'
+            dot: false
+        }]
+      }
+    },
+    connect: {
+      hoge:{
+        options: {
+          base:'public',
+          keepalive: true,
+          port: 8080
+        }
+      }
+    }
+  });
+
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.registerTask('default', ['copy', 'connect']);
+}
